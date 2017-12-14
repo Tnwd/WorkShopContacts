@@ -82,3 +82,19 @@ describe('PUT /contacts', () => {
             })
     })
 })
+
+describe('DELETE /contacts', () => {
+    it('Delete Data ID 6', (done) => {
+        request(router).delete('/contacts/6')
+            .expect(204)
+            .then((res) => {
+                request(router).get('/contacts/6')
+                    .then((res) => {
+                        let contact = res.body
+                        expect(contact).toBeDefined()
+                        expect(contact.id).not.toBe(6)
+                    })
+                done()
+            })
+    })
+})
