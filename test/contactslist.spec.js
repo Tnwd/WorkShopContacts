@@ -37,3 +37,26 @@ describe('GET /contacts', () => {
             })
     })
 })
+
+describe('POST /contacts', () => {
+    it('test 12 and status 201', (done) => {
+        request(router).post('/contacts')
+            .send([
+                { id: 12, name: 'PSPS', email: 'psps@gamil.com', phone: '0617598888', url: 'www.google.com', notes: 'mickeymouse' },
+
+            ])
+            .expect(201)
+            .then((res) => {
+                let contact = res.body
+                let contactbody = contact[0]
+                expect(contact).toBeDefined()
+                expect(contactbody.id).toBe(12)
+                expect(contactbody.name).toBe('PSPS')
+                expect(contactbody.email).toBe('psps@gamil.com')
+                expect(contactbody.phone).toBe('0617598888')
+                expect(contactbody.url).toBe('www.google.com')
+                expect(contactbody.notes).toBe('mickeymouse')
+                done()
+            })
+    })
+})
