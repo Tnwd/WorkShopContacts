@@ -60,3 +60,25 @@ describe('POST /contacts', () => {
             })
     })
 })
+
+describe('PUT /contacts', () => {
+    it('ID 12 Move to ID 6', (done) => {
+        request(router).put('/contacts/6')
+            .send({ id: 12, name: "PSPS", email: 'psps@gamil.com', phone: '0617598888', url: 'www.google.com', notes: 'mickeymouse' })
+            .expect(200)
+            .then((res) => {
+                request(router).get('/contacts/6')
+                    .then((res) => {
+                        let contact = res.body
+                        expect(contact).toBeDefined()
+                        expect(contact.id).toBe(12)
+                        expect(contact.name).toBe("PSPS")
+                        expect(contact.email).toBe('psps@gamil.com')
+                        expect(contact.phone).toBe('0617598888')
+                        expect(contact.url).toBe('www.google.com')
+                        expect(contact.notes).toBe('mickeymouse')
+                    })
+                done()
+            })
+    })
+})
